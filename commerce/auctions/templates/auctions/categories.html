@@ -1,0 +1,25 @@
+{% extends "auctions/layout.html" %}
+
+{% block title %}
+    Categories
+{% endblock %}
+
+{% block body %}
+    <ul class="list-group list-group-flush w-50 mx-auto text-center">
+        {% for category_name in category_names %}
+            {% if category_name == '' %}
+                <li class="list-group-item">
+                    <h4 class="mb-1"><a href="{% url 'listings_category' None %}">No Category</a></h4>
+                </li>
+            {% else %}
+                <li class="list-group-item">
+                    <h4 class="mb-1"><a href="{% url 'listings_category' category_name %}">{{ category_name }}</a></h4>
+                </li>
+            {% endif %}
+        {% empty %}
+            <li class="list-group-item">
+                <h4 class="mb-1">No listings found</h4>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

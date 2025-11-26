@@ -1,0 +1,62 @@
+{% extends "auctions/layout.html" %}
+
+{% block title %}
+    Active Listings
+{% endblock %}
+
+{% block alerts %}
+    {% for alert in alerts %}
+        <!-- https://getbootstrap.com/docs/5.3/components/alerts/ -->
+        <div class="alert alert-warning" role="alert">
+            {{ alert }}
+        </div>
+    {% endfor %}
+{% endblock %}
+
+
+{% block body %}
+    {% for listing in listings %}
+        <div class="card mx-auto" style="width: 1400px;">
+            <a href="{% url 'listing_show' listing.id %}" class="list-group-item-action">
+                <div class="card-header">
+                    <h5>{{ listing.title }}</h5>
+                </div>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td style="width: 300px">
+                                {% if listing.image_url %}
+                                    <div class="container-fluid text-center"> 
+                                        <img class="card-img-top" src="{{ listing.image_url }}" alt="/tstatic/auctions/noimage.jpeg">
+                                    </div>
+                                {% else %}
+                                    <div class="container-fluid text-center"> 
+                                        <img class="card-img-top" src="/static/auctions/noimage.jpeg">
+                                    </div>
+                                {% endif %}
+                            </td>
+                            <td style="width: 1100px">
+                                <div class="card-body">
+                                    <p>
+                                        <h5 class="mb-1">
+                                            ${% if max_bids|bid_from_maxbid:listing.id %}{{ max_bids|bid_from_maxbids:listing.id }}{% else %}{{ listing.starting_bid }}{% endif %}
+                                        </h5>
+                                        <h6 class="mb-1">{{ listing.category.category }}</h6>
+                                    </p>
+                                    <p class="card-text">
+                                        {{ listing.description }}
+                                    </p>
+                                    <hr>
+                                    <small>Posted by <b>{{listing.user_id.username }}</b> on: {{ listing.created_on }}</small>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </a>
+        </div>
+        <br>
+    {% empty %}
+        <h4>No Selected Listings</h4>
+    {% endfor %}
+{% endblock %} 

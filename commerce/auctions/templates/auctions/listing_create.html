@@ -1,0 +1,61 @@
+{% extends "auctions/layout.html" %}
+
+{% block title %}
+    Create Listing
+{% endblock %}
+
+{% block head %}
+    <style>
+        .input-group-prepend {
+            flex: 0 0 10%;
+        }
+
+        .input-group-text {
+            width: 100%;
+        }
+    </style>
+{% endblock %} 
+
+{% block body %}
+    <h2>Create New Listing</h2>
+    <br>
+    <!-- https://getbootstrap.com/docs/4.0/components/input-group/ -->
+    <form action="{% url 'listing_create' %}" method="post">
+        {% csrf_token %}
+        <div class="container-fluid">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Title</span>
+                </div>
+                <input class="form-control" aria-label="Listing Title" type="text" name="ListingTitle" required="required">
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Starting Bid</span>
+                </div>
+                <input class="form-control" aria-label="Listing Starting Bid" type="number" min="0" name="ListingStartingBid" required="required">
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Description</span>
+                </div>
+                <textarea class="form-control" aria-label="Listing Description" name="ListingDescription" required="required"></textarea>
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Category</span>
+                </div>
+                <input class="form-control" aria-label="Listing Category" type="text" name="ListingCategory" placeholder="Optional">
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Image URL</span>
+                </div>
+                <input class="form-control" aria-label="Listing Image URL" type="text" name="ListingImageURL" placeholder="Optional">
+            </div>
+        </div>
+        <div class="container-fluid text-center">        
+            <button class="btn btn-primary" type="submit">Create Listing</button>
+        </div>
+    </form> 
+{% endblock %} 
